@@ -126,46 +126,7 @@ class PtouchPrinter {
     $this->dataBuffer .= pack("C", 0x1A); //print
     
     usb_bulk_transfer($this->usbDeviceHandle, 0x02, $this->dataBuffer, strlen($this->dataBuffer), $txLength, 30*1000);
-  }
-  
-  public function gfxTest(){
-    $data = "";
-    $data = str_pad ("", 100, pack("x"));
-    $data .= pack("CC", 0x1B, 0x40); //reset
-    
-    $data .= pack("CCCC", 0x1B, 0x69, 0x61, 1); //raster mode
-    
-    $data .= pack("CCCCCCCCCCCCC", 0x1B, 0x69, 0x7A, 0x0, 1,0x18,0, 64,0,0,0,0,0); //print on 24mm
-
-    $data .= pack("CCCC", 0x1B, 0x69, 0x4D, 64); //auto cut
-    
-    $data .= pack("CCCC", 0x1B, 0x69, 0x4B, 1<<3); //Special setting, no chain print,
-    
-    $data .= pack("CCCCC", 0x1B, 0x69, 0x64, 55,0); //magin 15 dots (Minimum length is 174 dots)
-    
-    $data .= pack("CC", 0x4D, 0); //no compression
-    
-    // 
-    //  $data .= pack("CCC", 0x47, 0xf0,1); //raster gfx 31x128 pixels = 0x1F0 bytes (31 lines of 16 bytes)
-    
-    for ($i=0; $i<64; $i++){
-      $data .= pack("CCC", 0x47, 16,0); //raster gfx 31x128 pixels = 0x1F0 bytes (31 lines of 16 bytes)
-      $data .= str_pad ("", 16, pack("C", 0xaa));
-    }
-    
-    $data .= pack("C", 0x1A); //print
-    
-    $result = usb_bulk_transfer($this->usbDeviceHandle, 0x02, $data, strlen($data), $txLength, 5*1000);
-    if ($result == USB_SUCCESS){
-      $len =strlen($data);
-      print "Sendt $len print\n";
-    }
-    else {
-      $errorName = usb_error_name($result);
-      print "Print failed $errorName ($result)\n";
-    }
-    
-  }
+  } 
   
   private function findPrinterDevice(){
     $usbDevice = null;

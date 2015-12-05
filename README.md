@@ -1,5 +1,6 @@
 #A php class for printing out labels on Brother P-touch printers
 ###Supported models include (PT-P700, PT-H500, PT-E500)
+![What to expect](https://github.com/talpadk/ptouch-php/blob/master/test/result.jpg)
 
 The code is being developed / tested using a PT-P700, but the protocol should be the same on all three models.
 
@@ -22,9 +23,9 @@ Please consider looking into using  [udev](https://www.linux.com/news/hardware/p
 Alternatively you can test the script using 'sudo'.
 
 #### Contents
-* ptouch-utils/PtouchPrinter.php The printer class file
-* ptouch-utils/ptouch-img A script that prints an image on a label
-* test/test.png A test image that fit on 24mm labels
+* **ptouch-utils/PtouchPrinter.php** The printer class file
+* **ptouch-utils/ptouch-img** A script that prints an image on a label
+* **test/test.png** A test image that fits on 24mm labels
 
 ##### PtouchPrinter.php
 A class for printing GD images, see the code for doxygen comments explaining how to use it
@@ -34,5 +35,6 @@ A class for printing GD images, see the code for doxygen comments explaining how
 ##### ptouch-img
 Usage: ptouch-img path_to_file
 
-The image file may be a .png .jpg or .gif it must currently be 128 pixels high.   
-The red value of the pixels are thresholded in order to determine if a black pixel should be printet 
+The image file may be a .png .jpg or .gif.  
+It must currently be 128 pixels high.   
+Only the red value of the pixels are considered in order to determine if a black pixel should be printed

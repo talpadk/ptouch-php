@@ -38,3 +38,7 @@ Usage: ptouch-img path_to_file
 The image file may be a .png .jpg or .gif.  
 It must currently be 128 pixels high.   
 Only the red value of the pixels are considered in order to determine if a black pixel should be printed
+
+As an example from a fresh git clone:
+
+     sudo ./ptouch-utils/ptouch-img test/test.png

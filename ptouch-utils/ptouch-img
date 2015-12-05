@@ -1,0 +1,50 @@
+#!/usr/bin/php
+<?php
+
+
+require_once('PtouchPrinter.php');
+
+
+if (count($argv)!=2){
+   die("Usage: ptouch-img image_file_to_print\nP.s. the image must be 128 pixels tall\n");
+}
+
+$imageFile = $argv[1];
+
+if (preg_match('/^(.*)\.(png|gif|jpg|jpeg)$/i', $imageFile, $matches)){
+  $image = false;
+  $suffix = strtolower($matches[2]);
+  switch ($suffix){
+  case 'png':
+      $image = imagecreatefrompng($imageFile);	
+      break;
+  case 'gif':
+      $image = imagecreatefromgif($imageFile);	
+      break;
+  case 'jpeg':
+  case 'jpg':
+      $image = imagecreatefromjpeg($imageFile);	
+      break;
+  }
+
+  if ($image === false){
+    die("Failed to open image '$imageFile'\n");
+  }
+  
+  $printer = new PtouchPrinter(false);
+  $errors = $printer->open();
+  if (is_null($errors)){
+    $printer->printImage($image);
+  }
+  else {
+    $printer->close();
+    die($errors);
+  }
+  $printer->close();
+}
+else {
+     die ("Unable to determine type type (png, gif or jpg) from '$filename'\n");
+}
+
+
+?>
